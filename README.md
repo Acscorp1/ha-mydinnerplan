@@ -9,10 +9,13 @@ Setup guide and token creation: [mydinnerplan.com/home-assistant](https://mydinn
 
 ## Install with HACS (recommended)
 
+> **Not** Settings → Apps / Add-ons → Repositories. That store only accepts add-on repos.
+> myDinnerPlan is a **custom integration** — install it through **HACS** (or the zip below).
+
 1. Install [HACS](https://hacs.xyz/) if you do not have it yet.
-2. Open **HACS → Integrations** (or **HACS → ⋮ → Custom repositories**).
-3. Add this repository as a custom repository:
-   - **Repository:** `Acscorp1/ha-mydinnerplan`
+2. Open **HACS** (sidebar), then **⋮ → Custom repositories**.
+3. Add this repository:
+   - **Repository:** `https://github.com/Acscorp1/ha-mydinnerplan`
    - **Category:** Integration
 4. Search for **myDinnerPlan**, download/install it, then **restart Home Assistant**.
 5. Go to **Settings → Devices & services → Add integration → myDinnerPlan**.
