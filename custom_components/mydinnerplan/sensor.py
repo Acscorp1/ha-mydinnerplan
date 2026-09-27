@@ -154,7 +154,7 @@ class MDPSensor(CoordinatorEntity[MDPCoordinator], SensorEntity):
             "manufacturer": "myDinnerPlan",
             "model": "Household dinner plan",
             "configuration_url": f"{coordinator.host}/home-assistant",
-            "sw_version": "1.1.0",
+            "sw_version": "1.1.1",
         }
 
     @property
