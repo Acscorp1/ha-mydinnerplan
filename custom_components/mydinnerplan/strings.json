@@ -1,0 +1,36 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect myDinnerPlan",
+        "description": "Create a token in myDinnerPlan → Account → Settings → Home Assistant, then paste it here.",
+        "data": {
+          "token": "Access token",
+          "host": "myDinnerPlan URL"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "That token was rejected. Create a new token in Account Settings.",
+      "cannot_connect": "Could not reach myDinnerPlan. Check the URL and that Home Assistant can access the internet."
+    },
+    "abort": {
+      "already_configured": "This myDinnerPlan token is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "tonight": { "name": "Dinner tonight" },
+      "tomorrow": { "name": "Dinner tomorrow" },
+      "week": { "name": "Dinner week" },
+      "shopping": { "name": "Dinner shopping needed" }
+    },
+    "calendar": {
+      "dinner_plan": { "name": "Dinner plan" }
+    },
+    "image": {
+      "tonight": { "name": "Tonight recipe photo" },
+      "tomorrow": { "name": "Tomorrow recipe photo" }
+    }
+  }
+}
