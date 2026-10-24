@@ -16,7 +16,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import DOMAIN, device_info
 from .coordinator import MDPCoordinator
 
 
@@ -70,6 +70,7 @@ SENSORS: tuple[MDPSensorDescription, ...] = (
             "ingredient_count": data.get("ingredient_count"),
             "steps": data.get("steps") or [],
             "step_count": data.get("step_count"),
+            "recipes": data.get("recipes") or [],
             "week_summary": data.get("week_summary"),
         },
     ),
@@ -92,6 +93,11 @@ SENSORS: tuple[MDPSensorDescription, ...] = (
             "meal_url": data.get("tomorrow_meal_url"),
             "servings": data.get("tomorrow_servings"),
             "attending": data.get("tomorrow_attending"),
+            "accompaniments": data.get("tomorrow_accompaniments"),
+            "ingredients": data.get("tomorrow_ingredients") or [],
+            "steps": data.get("tomorrow_steps") or [],
+            "step_count": data.get("tomorrow_step_count"),
+            "recipes": data.get("tomorrow_recipes") or [],
         },
     ),
     MDPSensorDescription(
@@ -115,6 +121,8 @@ SENSORS: tuple[MDPSensorDescription, ...] = (
             "shopping_allowed": data.get("shopping_allowed"),
             "shopping_on_hand": data.get("shopping_on_hand"),
             "shopping_items": data.get("shopping_items"),
+            "shopping_list": data.get("shopping_list") or [],
+            "shopping_url": data.get("shopping_url"),
             "shopping_range": data.get("shopping_range"),
         },
     ),
@@ -148,14 +156,7 @@ class MDPSensor(CoordinatorEntity[MDPCoordinator], SensorEntity):
         super().__init__(coordinator)
         self.entity_description = description
         self._attr_unique_id = f"{entry.entry_id}_{description.key}"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, entry.entry_id)},
-            "name": "myDinnerPlan",
-            "manufacturer": "myDinnerPlan",
-            "model": "Household dinner plan",
-            "configuration_url": f"{coordinator.host}/home-assistant",
-            "sw_version": "1.1.2",
-        }
+        self._attr_device_info = device_info(entry.entry_id, coordinator.host)
 
     @property
     def native_value(self) -> Any:

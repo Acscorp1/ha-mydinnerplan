@@ -7,10 +7,18 @@ from homeassistant.core import HomeAssistant
 
 from .const import CONF_HOST, CONF_TOKEN, DOMAIN, PLATFORMS
 from .coordinator import MDPCoordinator
+from .frontend import async_register_frontend
+
+_LOGGER = __import__("logging").getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up myDinnerPlan from a config entry."""
+    try:
+        await async_register_frontend(hass)
+    except Exception:
+        _LOGGER.exception("myDinnerPlan dashboard cards could not be registered")
+
     host = str(entry.data[CONF_HOST])
     token = str(entry.data[CONF_TOKEN])
     coordinator = MDPCoordinator(hass, host, token)

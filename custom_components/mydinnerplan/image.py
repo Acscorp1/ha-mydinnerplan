@@ -11,7 +11,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util import dt as dt_util
 
-from .const import DOMAIN
+from .const import DOMAIN, device_info
 from .coordinator import MDPCoordinator
 
 
@@ -48,12 +48,7 @@ class MDPRecipeImage(CoordinatorEntity[MDPCoordinator], ImageEntity):
         self._key = key
         self._attr_name = name
         self._attr_unique_id = f"{entry.entry_id}_image_{key}"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, entry.entry_id)},
-            "name": "myDinnerPlan",
-            "manufacturer": "myDinnerPlan",
-            "model": "Household dinner plan",
-        }
+        self._attr_device_info = device_info(entry.entry_id, coordinator.host)
         self._attr_image_url = self._url_from_data(coordinator.data)
         self._attr_image_last_updated = dt_util.utcnow()
 
